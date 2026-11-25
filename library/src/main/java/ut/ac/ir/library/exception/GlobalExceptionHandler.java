@@ -7,6 +7,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import ut.ac.ir.library.dto.response.ApiResponse;
+import ut.ac.ir.library.exception.custom.ConflictException;
 import ut.ac.ir.library.exception.custom.NotFoundException;
 
 @RestControllerAdvice
@@ -27,6 +28,14 @@ public class GlobalExceptionHandler {
         log.warn("Item not found. message: {}", message);
         ApiResponse<Void> response = ApiResponse.failure(message, HttpStatus.NOT_FOUND);
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+    }
+
+    @ExceptionHandler(ConflictException.class)
+    public ResponseEntity<ApiResponse<Void>> handleConflictException(ConflictException exception) {
+        String message = exception.getMessage();
+        log.warn("Conflict occurred. message: {}", message);
+        ApiResponse<Void> response = ApiResponse.failure(message, HttpStatus.CONFLICT);
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
     }
 
 }

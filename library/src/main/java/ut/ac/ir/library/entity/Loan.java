@@ -2,6 +2,7 @@ package ut.ac.ir.library.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -12,6 +13,7 @@ import java.time.LocalDate;
 @Table(name = "loans")
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Loan {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,7 +27,7 @@ public class Loan {
     private String borrowerName;
 
     @Column(name = "loan_date", nullable = false)
-    private LocalDate loanData;
+    private LocalDate loanDate;
 
     @Column(name = "return_date", nullable = false)
     private LocalDate returnDate;
