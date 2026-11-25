@@ -1,0 +1,55 @@
+services:
+  postgres-db:
+    image: postgres:18-alpine
+    container_name: postgres_container2
+    environment:
+      POSTGRES_DB: lib_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: aminamin
+    ports:
+      - "5434:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - lib_network
+
+  redis:
+    image: redis:7-alpine
+    container_name: redis_container2
+    ports:
+      - "6380:6379"
+    networks:
+      - lib_network
+
+  lib-service:
+    build: .
+    image: lib-service:0.0.1
+    container_name: lib_service_container
+    ports:
+      - "9091:9091"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-db:5432/lib_db
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: aminamin
+      SPRING_DATA_REDIS_HOST: redis
+      SPRING_DATA_REDIS_PORT: 6379
+      SERVER_PORT: 9091
+    depends_on:
+      postgres-db:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    networks:
+      - lib_network
+
+volumes:
+  pgdata:
+
+networks:
+  lib_network:
+    driver: bridge
