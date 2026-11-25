@@ -1,9 +1,10 @@
 package ut.ac.ir.library.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 import ut.ac.ir.library.entity.Book;
 
 @Repository
-public interface BookRepository extends JpaRepository<Long, Book> {
+public interface BookRepository extends JpaRepository<Book, Long>, JpaSpecificationExecutor<Book> {
 }

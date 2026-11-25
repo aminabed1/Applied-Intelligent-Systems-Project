@@ -2,6 +2,7 @@ package ut.ac.ir.library.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -12,6 +13,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "books")
+@Builder
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,4 +33,7 @@ public class Book {
 
     @Column(name = "is_available", nullable = false)
     private boolean isAvailable = true;
+
+    @Column(name = "is_deleted", nullable = false)
+    private boolean isDeleted = false;
 }
