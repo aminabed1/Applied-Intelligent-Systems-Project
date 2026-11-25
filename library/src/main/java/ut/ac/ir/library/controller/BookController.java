@@ -36,13 +36,13 @@ public class BookController {
             @PageableDefault(size = 10, sort = "id") Pageable pageable
             ) {
         ApiResponse<Page<Book>> response = bookService.getAllWithFilters(tile, author, publishYear, isAvailable, pageable);
-        return ResponseEntity.status(HttpStatus.FOUND).body(response);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<ApiResponse<Book>> getBookById(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<Book>> getById(@PathVariable Long id) {
         ApiResponse<Book> response = bookService.findById(id);
-        return ResponseEntity.status(HttpStatus.FOUND).body(response);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     @PatchMapping("{id}")
