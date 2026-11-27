@@ -1,7 +1,7 @@
 services:
   postgres-db:
     image: postgres:18-alpine
-    container_name: postgres_container2
+    container_name: postgres_container
     environment:
       POSTGRES_DB: lib_db
       POSTGRES_USER: postgres
